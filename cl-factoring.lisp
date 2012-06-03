@@ -1,7 +1,8 @@
 
 (defpackage :cl-factoring
   (:use :cl :iterate :cl-primality)
-  (:export))
+  (:export
+   #:factor))
 
 (in-package :cl-factoring)
 
@@ -200,6 +201,12 @@
 
 
 ;; @\section{Generic Interface}
+
+(defun factor (n)
+  "Return the prime factorization of N as a sorted \(smallest to largest) list.  Factors that appear more than once are present mulitiple times in the output.
+
+\(reduce '* (factor n)) = n"
+  (pollards-rho n))
 
 ;; Define some common name interfaces that hide the methods that are being used.
 
