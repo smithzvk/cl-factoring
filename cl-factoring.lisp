@@ -217,7 +217,7 @@
   (:import-from :cl-factoring
                 #:trial-division
                 #:pollards-rho
-                #:brents-rho)
+                #:brents-cycle)
   (:export #:trial-division
            #:pollards-rho
-           #:brents-rho))
+           #:brents-cycle))
