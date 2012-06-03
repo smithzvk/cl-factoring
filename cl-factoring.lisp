@@ -50,22 +50,26 @@
 ;; to trial division and much faster in practice (this should be really tested,
 ;; particularly with a prime sieve in place).
 
+(defun squarep (n)
+  (let ((sqrt (isqrt n)))
+    (if (= (* sqrt sqrt) n)
+        sqrt
+        nil)))
+
 (defun pollards-rho (n)
   "Find the prime factorization of N."
   (if (primep n)
       (list n)
-      (let ((factor (pollards-rho-find-factor n)))
-        (sort (append (pollards-rho factor)
-                      (pollards-rho (/ n factor)))
-              #'<))))
+      (sort (let ((factor
+                    (or (squarep n)
+                        (pollards-rho-find-factor n))))
+              (append (pollards-rho factor)
+                      (pollards-rho (/ n factor))))
+            #'<)))
 
 (defun pollards-rho-find-factor (n)
   (handler-case
-      (typecase n
-        (fixnum
-         (pollards-rho-attempt-fixnum n))
-        (integer
-         (pollards-rho-attempt n)))
+      (pollards-rho-attempt n)
     (factor-attempt-failed ()
       (pollards-rho-find-factor n))))
 
@@ -91,23 +95,6 @@
                    (signal 'factor-attempt-failed)
                    (return d))))))
 
-(defun pollards-rho-attempt-fixnum (n)
-  (declare (optimize (speed 3))
-           (type (integer 0 #.(- most-positive-fixnum 1)) n))
-  (let* ((c (1+ (random n)))
-         (f (lambda (x)
-              (declare (type fixnum x c))
-              (mod (+ (* x x) c) n))))
-    (iter
-      (declare (type fixnum x y d n))
-      (for x initially (funcall f 2) then (funcall f x))
-      (for y initially (funcall f (funcall f 2)) then (funcall f (funcall f y)))
-      (for d = (gcd (abs (- x y)) n))
-      (while (= d 1))
-      (finally (if (= d n)
-                   (signal 'factor-attempt-failed)
-                   (return d))))))
-
 ;; @\subsection{Brent's Cycle Method}
 
 ;; @Brent's cycle finding method is very similar to the pollard method but is
@@ -117,10 +104,12 @@
   "Find the prime factorization of N."
   (if (primep n)
       (list n)
-      (let ((factor (brents-cycle-find-factor n)))
-        (sort (append (brents-cycle factor)
-                      (brents-cycle (/ n factor)))
-              #'<))))
+      (sort (let ((factor
+                    (or (squarep n)
+                        (pollards-rho-find-factor n))))
+              (append (pollards-rho factor)
+                      (pollards-rho (/ n factor))))
+            #'<)))
 
 (defun brents-cycle-find-factor (n)
   (handler-case
