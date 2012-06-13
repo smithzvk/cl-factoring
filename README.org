@@ -1,0 +1,31 @@
+
+* CL-Factoring
+
+This library presents a set of algorithms for computing integer factorizations.
+An interface is provided that takes an integer and will return a list of prime
+numbers such that, when multiplied together, will result in the original number.
+
+There is no magic sauce here or mathematical breakthroughs; the time
+complexities of each algorithm is exponential.
+
+** Interface
+
+The library provides the function =factor=.
+
+Specific factoring methods can be accessed from the package
+=cl-factoring-algorithms=.
+
+** General Purpose Factoring Algorithms
+
+ 1. Trial Division
+ 2. Pollard's Rho
+ 3. Brent's Cycle
+ 4. Hypercubic Polynomial Quadratic Sieve
+
+** License
+
+This library is licensed under the LLGPL where possible.
+
+Certain algorithms may be developed by others and be licensed under more
+permissive licenses.  If development is performed on these, the license will
+remain as is (the LLGPL won't infect them).
