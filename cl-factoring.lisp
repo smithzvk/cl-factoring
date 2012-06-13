@@ -217,6 +217,8 @@
 
 ;; O(e^sqrt(log n log log n))
 
+;; +1@ulimy-hmpqs.lisp
+
 ;; Fastest known algorithm for numbers under 100 decimal digits
 
 ;; @\subsection{General number field sieve}
@@ -232,7 +234,7 @@
   "Return the prime factorization of N as a sorted \(smallest to largest) list.  Factors that appear more than once are present mulitiple times in the output.
 
 \(reduce '* (factor n)) = n"
-  (pollards-rho n))
+  (ulimy-hmpqs:hmpqs n))
 
 ;; Define some common name interfaces that hide the methods that are being used.
 
@@ -244,6 +246,9 @@
                 #:trial-division
                 #:pollards-rho
                 #:brents-cycle)
+  (:import-from :ulimy-hmpqs
+                #:hmpqs)
   (:export #:trial-division
            #:pollards-rho
-           #:brents-cycle))
+           #:brents-cycle
+           #:hmpqs))
