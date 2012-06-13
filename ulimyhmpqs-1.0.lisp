@@ -766,36 +766,36 @@
 
 
 
-#| 
-these functions have been defined for the very fishy development 
-of a fast sieve initialization routine. we leave them here, because
-the slow function init-sieve-1 explains in a very simple fashion
-what the fast function init-sieve below does...
-(defun ss (from to) 
-  (declare (special sieve))
-  (subseq sieve from to))
-(defun clear-sieve ()
-  (declare (special sieve sieve-size))
-  (dotimes (y sieve-size) (setf (aref sieve y) -999)))
-(defun check-sieve ()
-  (declare (special sieve sieve-size))
-  (declare (special a beta gamma))
-  (let ((nrofdevs 0)
-        (avgdev 0))
-    (dotimes (y sieve-size)
-      (let* ((sy (aref sieve y))
-             (dev (- sy (ilog2 (h1 y)))))
-        (if (= sy -999) (debug "no init at" y)
-            (when (/= 0 dev)
-              (incf nrofdevs) (incf avgdev (abs dev))))))
-    (if (zerop nrofdevs) (format t "super sieve!~%")
-        (setf avgdev (float (/ avgdev nrofdevs))))
-    (debug nrofdevs avgdev)))
-(defun init-sieve-1 (a beta gamma)
-  (declare (special sieve sieve-size))
-  (dotimes (y sieve-size)
-    (setf (aref sieve y) (list y (ilog2 (h1 y)))))) 
-|#
+
+;; these functions have been defined for the very fishy development 
+;; of a fast sieve initialization routine. we leave them here, because
+;; the slow function init-sieve-1 explains in a very simple fashion
+;; what the fast function init-sieve below does...
+
+;; (defun ss (from to) 
+;;   (declare (special sieve))
+;;   (subseq sieve from to))
+;; (defun clear-sieve ()
+;;   (declare (special sieve sieve-size))
+;;   (dotimes (y sieve-size) (setf (aref sieve y) -999)))
+;; (defun check-sieve ()
+;;   (declare (special sieve sieve-size))
+;;   (declare (special a beta gamma))
+;;   (let ((nrofdevs 0)
+;;         (avgdev 0))
+;;     (dotimes (y sieve-size)
+;;       (let* ((sy (aref sieve y))
+;;              (dev (- sy (ilog2 (h1 y)))))
+;;         (if (= sy -999) (debug "no init at" y)
+;;             (when (/= 0 dev)
+;;               (incf nrofdevs) (incf avgdev (abs dev))))))
+;;     (if (zerop nrofdevs) (format t "super sieve!~%")
+;;         (setf avgdev (float (/ avgdev nrofdevs))))
+;;     (debug nrofdevs avgdev)))
+;; (defun init-sieve-1 (a beta gamma)
+;;   (declare (special sieve sieve-size))
+;;   (dotimes (y sieve-size)
+;;     (setf (aref sieve y) (list y (ilog2 (h1 y)))))) 
 
             
 (defmacro h1 (y) `(+ (* (+ (* a ,y) beta) ,y) gamma))
