@@ -168,6 +168,43 @@
 
 ;; O(n^(1/4))
 
+;; (defun shanks-square-forms (n)
+;;   (let* ((k (1+ (random 100)))
+;;          (p0 (isqrt (* k n)))
+;;          (q0 1)
+;;          (q1 (- (* k n) (* p0 p0))))
+;;     (iter
+;;       (for i from 1)
+;;       (until (squarep qi))
+;;       (for bi = (floor (/ (+ (isqrt (* k n)) pi-1)
+;;                          qi)))
+;;       (for pi = (- (* bi qi) pi-1))
+;;       (for qi+1 = (+ qi-1 (* bi (- pi-1 pi)))))
+;;     (let* ((b0 (floor (/ (+ (isqrt (* k N)) pi-1) (sqrt qi))))
+;;            (p0 (- (* b0 (sqrt qi)) pi-1))
+;;            (q0 (sqrt qi))
+;;            (q1 (/ (- (* k n) (* p0 p0)) q0)))
+;;       (iter
+;;         (until (= pi+1 pi))
+;;         (for bi = (floor (/ (+ (isqrt (* k n)) pi-1)
+;;                            qi)))
+;;         (for pi = (- (* bi qi) pi-1))
+;;         (for qi+1 = (+ qi-1 (* bi (- pi-1 pi)))))
+;;       (let ((gcd (gcd n pi)))
+;;         (if (and (/= gcd 1) (/= gcd n))
+;;             gcd
+;;             (signal 'factor-attempt-failed))))))
+
+
+;; (defun shanks-square-forms (n)
+;;   (let ((k (1+ (random 100))))
+;;     (iter
+;;       (squarep q)
+;;       (for b initially 0 then (floor (/ (+ (isqrt (* k n)) pi-1) qi)))
+;;       (for p initially (isqrt (* k n)) then (- (* bi qi) pi-1))
+;;       (for q-next initially (- (* k n) (* p0 p0)) then (+ qi-1 (* bi (- pi-1 pi))))
+;;       (for q previous q-next initially 1)
+
 ;; @\subsection{Dixon's factorization method}
 
 ;; O(e^(2 sqrt(2) sqrt(log n log log n)))
