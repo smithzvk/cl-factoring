@@ -389,7 +389,7 @@
 (defvar *max-stored-prime*)
 (defvar *max-divide-out*)   ; see primeq
 (unless (boundp '*stored-primes*)
-  (format t "generating ~d primes...~%" *nr-of-stored-primes*)
+  ;; (format t "generating ~d primes...~%" *nr-of-stored-primes*)
   (setf *stored-primes* (make-primes *nr-of-stored-primes*))
   (setf *max-stored-prime* (aref *stored-primes* (- *nr-of-stored-primes* 1)))
   (setf *max-divide-out* (* (min 5000 *max-stored-prime*) *max-stored-prime*)))
