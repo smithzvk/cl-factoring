@@ -71,3 +71,8 @@
 
 (defsuite* specialized-factoring)
 
+(defsuite* issues)
+
+(deftest numbers-that-err ()
+  (let ((n 327146098439579))
+    (is (= n (cl-factoring-algorithms:hmpqs n)))))
