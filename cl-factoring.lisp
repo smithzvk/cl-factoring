@@ -40,8 +40,8 @@
                   (mapcar #'trial-division
                           (do ((i 2 (1+ i)))
                               ((or (integerp (/ n i))
-                                   (> i (isqrt n)) )
-                               (list i (/ n i)) )))))))
+                                   (> i (isqrt n)))
+                               (list i (/ n i)))))))))
 
 ;; @\subsection{Pollard's Rho Method}
 
