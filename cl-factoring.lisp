@@ -24,7 +24,7 @@
 ;; the problem contains composites whose prime factors are all (or are all but
 ;; one) small integers.  This set of numbers contains most of the numbers that
 ;; users encounter in everyday life with the notable exception of the numbers
-;; used in crypography.
+;; used in cryptography.
 
 ;; @\subsection{Trial Division}
 
@@ -35,13 +35,15 @@
 ;; later.
 
 (defun trial-division (n)
-  (cond ((primep n) (list n))
-        (t (apply #'append
-                  (mapcar #'trial-division
-                          (do ((i 2 (1+ i)))
-                              ((or (integerp (/ n i))
-                                   (> i (isqrt n)))
-                               (list i (/ n i)))))))))
+  (if (= n 1)
+      nil
+      (cond ((primep n) (list n))
+            (t (apply #'append
+                      (mapcar #'trial-division
+                              (do ((i 2 (1+ i)))
+                                  ((or (integerp (/ n i))
+                                       (> i (isqrt n)))
+                                   (list i (/ n i))))))))))
 
 ;; @\subsection{Pollard's Rho Method}
 
@@ -58,14 +60,16 @@
 
 (defun pollards-rho (n)
   "Find the prime factorization of N."
-  (if (primep n)
-      (list n)
-      (sort (let ((factor
-                    (or (squarep n)
-                        (pollards-rho-find-factor n))))
-              (append (pollards-rho factor)
-                      (pollards-rho (/ n factor))))
-            #'<)))
+  (if (= n 1)
+      nil
+      (if (primep n)
+          (list n)
+          (sort (let ((factor
+                        (or (squarep n)
+                            (pollards-rho-find-factor n))))
+                  (append (pollards-rho factor)
+                          (pollards-rho (/ n factor))))
+                #'<))))
 
 (defun pollards-rho-find-factor (n)
   (handler-case
@@ -102,14 +106,16 @@
 
 (defun brents-cycle (n)
   "Find the prime factorization of N."
-  (if (primep n)
-      (list n)
-      (sort (let ((factor
-                    (or (squarep n)
-                        (pollards-rho-find-factor n))))
-              (append (pollards-rho factor)
-                      (pollards-rho (/ n factor))))
-            #'<)))
+  (if (= n 1)
+      nil
+      (if (primep n)
+          (list n)
+          (sort (let ((factor
+                        (or (squarep n)
+                            (pollards-rho-find-factor n))))
+                  (append (pollards-rho factor)
+                          (pollards-rho (/ n factor))))
+                #'<))))
 
 (defun brents-cycle-find-factor (n)
   (handler-case
